@@ -1,0 +1,5 @@
+import ExecutiveMirrorPage from "./ExecutiveMirrorPage.jsx"
+
+export default function App() {
+return <ExecutiveMirrorPage />
+}
