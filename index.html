@@ -6,41 +6,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#f8fafc; --card:#fff; --ink:#0f172a; --muted:#475569; --line:#e2e8f0;
+      --bg:#f6f8fb; --card:#ffffff; --ink:#0f172a; --muted:#475569; --line:#e2e8f0; --accent:#2563eb;
+      --chip:#f1f5f9; --chip-border:#e5e7eb; --ok:#16a34a; --warn:#eab308;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
-    header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line)}
-    .wrap{max-width:1080px;margin:0 auto;padding:16px 20px}
-    h1{margin:0;font-size:22px}
+    html,body{margin:0}
+    body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+    header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line);z-index:50}
+    .wrap{max-width:1100px;margin:0 auto;padding:14px 20px}
+    h1{margin:0;font-size:20px}
     .grid{display:grid;gap:16px}
     .grid-2{grid-template-columns:1fr}
-    @media(min-width:960px){.grid-2{grid-template-columns:1fr 1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+    @media(min-width:980px){.grid-2{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
     .muted{color:var(--muted)}
     .row{display:flex;gap:12px;align-items:center;justify-content:space-between}
     .label{font-size:14px;font-weight:600}
+    .subtle{font-size:12px;color:var(--muted)}
     input[type=range]{width:100%}
-    textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit}
-    button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}
-    button:hover{background:#f1f5f9}
+    textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit;background:#fff}
+    .btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}
+    .btn:hover{background:#f8fafc}
+    .btn.primary{border-color:var(--accent);color:#fff;background:var(--accent)}
+    .btn.primary:hover{filter:brightness(0.95)}
+    .btn.ghost{border-color:var(--line);background:#fff}
+    .btnbar{display:flex;gap:10px;flex-wrap:wrap}
+    .section-title{font-weight:800;margin:6px 0 6px;font-size:16px}
+    .title{font-size:20px;font-weight:800;margin:0 0 6px}
+    .divider{height:1px;background:var(--line);margin:10px 0 16px}
     .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{font-size:12px;border:1px solid var(--line);padding:4px 8px;border-radius:999px;background:#fff}
+    .tag{font-size:12px;border:1px solid var(--chip-border);padding:4px 8px;border-radius:999px;background:var(--chip)}
     .list{margin:8px 0 0 18px}
-    .list li{margin:4px 0}
-    .title{font-size:18px;font-weight:700;margin:0 0 6px}
-    .sub{font-size:14px;margin:6px 0}
-    details{font-size:12px}
-    .section-title{font-weight:700;margin:6px 0 6px}
-    @media print{header,.noprint{display:none} .wrap{padding:0} body{background:#fff}}
+    .list li{margin:5px 0}
+    .kpi{display:flex;gap:10px;flex-wrap:wrap}
+    .kpi .pill{background:var(--chip);border:1px solid var(--chip-border);padding:6px 10px;border-radius:10px;font-size:12px}
+    .progress{font-size:12px;color:var(--muted)}
+    .accent{color:var(--accent)}
+    .badge-ok{color:#065f46;background:#ecfdf5;border:1px solid #d1fae5;border-radius:999px;padding:4px 8px;font-size:12px}
+    .badge-warn{color:#7c2d12;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:4px 8px;font-size:12px}
+    .noprint{display:block}
+    @media print{
+      header,.noprint{display:none}
+      body{background:#fff}
+      .wrap{padding:0}
+      .card{border:none;border-radius:0;padding:0}
+      .divider{margin:8px 0}
+    }
   </style>
 </head>
 <body>
 <header>
   <div class="wrap row">
-    <h1>CORe Identity — Personality & Career Branding</h1>
-    <div class="noprint">
-      <button onclick="window.print()">Print / Save PDF</button>
+    <div>
+      <h1>CORe Identity — Personality & Career Branding</h1>
+      <div class="progress" id="progressText">16 questions • default = 3 / neutral</div>
+    </div>
+    <div class="btnbar noprint">
+      <button class="btn" onclick="window.print()">Print</button>
+      <button class="btn ghost" onclick="location.reload()">Reset</button>
     </div>
   </div>
 </header>
@@ -49,19 +72,23 @@
   <!-- Intro -->
   <section class="card">
     <div class="title">What this does</div>
-    <p class="sub muted">
-      Quick self-assessment inspired by your story to translate what you feel “unable/stuck” with in
-      <b>life, family, work, and relationships</b> into a practical identity snapshot:
-      <i>Big Five</i>, <i>MBTI tilt</i>, <i>Enneagram drive hint</i>, and <i>Career Branding tags</i> — plus strengths, risks, and growth actions.
+    <p class="muted">
+      Translate what you feel “unable/stuck” with across <b>life, family, work, relationships</b> into a practical identity snapshot:
+      <b>Big Five</b>, <b>MBTI tilt</b>, <b>Enneagram drive hint</b>, and <b>Career Branding tags</b> — plus strengths, risks, and growth actions.
     </p>
+    <div class="kpi">
+      <div class="pill">Single-page • No login</div>
+      <div class="pill">Printable PDF</div>
+      <div class="pill">Copy/Download results</div>
+    </div>
   </section>
 
-  <!-- Questions + Notes -->
+  <!-- Questions -->
   <section class="grid grid-2">
-    <!-- Core (6) -->
+    <!-- Core (1–6) -->
     <div class="card">
-      <div class="title">A) Core Life/Work/Relationship (1–5)</div>
-      <p class="muted" style="margin-top:-6px">1 = strongly disagree, 5 = strongly agree</p>
+      <div class="section-title">A) Core Life/Work/Relationship (1–5)</div>
+      <div class="subtle" style="margin:-2px 0 8px">1 = strongly disagree, 5 = strongly agree</div>
 
       <div class="label">1) In tough moments, I naturally take charge and set direction. (Work/Life)</div>
       <div class="row"><input id="q1" type="range" min="1" max="5" value="3" oninput="sv(this,'v1')"><span id="v1">3</span></div>
@@ -82,13 +109,13 @@
       <div class="row"><input id="q6" type="range" min="1" max="5" value="3" oninput="sv(this,'v6')"><span id="v6">3</span></div>
     </div>
 
-    <!-- Personality (6) + Career Branding (4) -->
+    <!-- Personality + Career Branding (7–16) -->
     <div class="card">
-      <div class="title">B) Personality + Career Branding (1–5)</div>
-      <p class="muted" style="margin-top:-6px">These map to Big Five / Enneagram hints and career identity</p>
+      <div class="section-title">B) Personality + Career Branding (1–5)</div>
+      <div class="subtle" style="margin:-2px 0 8px">Maps to Big Five / MBTI tilt / Enneagram hint & career identity</div>
 
-      <!-- Personality (6) -->
-      <div class="section-title">Personality</div>
+      <div class="divider"></div>
+      <div class="subtle">Personality</div>
 
       <div class="label">7) Openness — I seek new ideas/experiences that challenge my comfort zone.</div>
       <div class="row"><input id="q7" type="range" min="1" max="5" value="3" oninput="sv(this,'v7')"><span id="v7">3</span></div>
@@ -108,8 +135,8 @@
       <div class="label">12) Achievement Drive — Recognition/results motivate me strongly.</div>
       <div class="row"><input id="q12" type="range" min="1" max="5" value="3" oninput="sv(this,'v12')"><span id="v12">3</span></div>
 
-      <!-- Career Branding (4) -->
-      <div class="section-title">Career Branding</div>
+      <div class="divider"></div>
+      <div class="subtle">Career Branding</div>
 
       <div class="label">13) Adaptability — I can pivot without losing focus.</div>
       <div class="row"><input id="q13" type="range" min="1" max="5" value="3" oninput="sv(this,'v13')"><span id="v13">3</span></div>
@@ -125,15 +152,20 @@
     </div>
   </section>
 
-  <!-- Notes + Generate -->
-  <section class="grid grid-2">
+  <!-- Notes + Actions -->
+  <section class="grid grid-2 noprint">
     <div class="card">
-      <div class="title">Your Notes (context)</div>
-      <p class="muted" style="margin-top:-6px">Add anything about yourself: role, industry, family/relationship context, challenges, goals.</p>
+      <div class="section-title">Your Notes (context)</div>
+      <div class="subtle" style="margin:-2px 0 8px">Add role, industry, family/relationship context, challenges, and goals.</div>
       <textarea id="notes" placeholder="Type your context here..."></textarea>
     </div>
-    <div class="card noprint" style="display:flex;align-items:end;justify-content:flex-end">
-      <button onclick="generateReport()">Generate CORe Identity Report</button>
+    <div class="card" style="display:flex;align-items:end;justify-content:flex-end">
+      <div class="btnbar">
+        <button class="btn primary" onclick="generateReport()">Generate Report</button>
+        <button class="btn" onclick="copySummary()">Copy Summary</button>
+        <button class="btn" onclick="downloadJSON()">Download JSON</button>
+        <button class="btn ghost" onclick="location.reload()">Reset</button>
+      </div>
     </div>
   </section>
 
@@ -144,25 +176,32 @@
 
     <div class="tags" id="tags"></div>
 
-    <div class="grid grid-2" style="margin-top:12px">
+    <div class="divider"></div>
+    <div class="grid grid-2">
       <div>
-        <div class="label">Strengths</div>
+        <div class="section-title">Strengths</div>
         <ul id="strengths" class="list"></ul>
       </div>
       <div>
-        <div class="label">Risks / Watchouts</div>
+        <div class="section-title">Risks / Watchouts</div>
         <ul id="risks" class="list"></ul>
       </div>
     </div>
 
     <div style="margin-top:12px">
-      <div class="label">Growth Actions</div>
+      <div class="section-title">Growth Actions</div>
       <ul id="growth" class="list"></ul>
     </div>
 
     <div id="userNotesBox" style="margin-top:12px;display:none">
-      <div class="label">Your Notes</div>
+      <div class="section-title">Your Notes</div>
       <p id="userNotes" class="sub"></p>
+    </div>
+
+    <div class="divider"></div>
+    <div class="kpi">
+      <span id="kpiEnergy" class="badge-ok" style="display:none"></span>
+      <span id="kpiBoundary" class="badge-warn" style="display:none"></span>
     </div>
 
     <details style="margin-top:10px">
@@ -178,8 +217,12 @@
   const gt = id => document.getElementById(id).value.trim();
   const tag = t => { const s=document.createElement('span'); s.className='tag'; s.textContent=t; return s; };
   const li  = t => { const l=document.createElement('li');  l.textContent=t;   return l; };
+  function sv(input,id){ document.getElementById(id).textContent = input.value; updateProgress(); }
 
-  function sv(input, id){ document.getElementById(id).textContent = input.value; }
+  function updateProgress(){
+    // not tracking “answered” individually since all sliders have values; show count and tip
+    document.getElementById('progressText').textContent = '16 questions • tip: adjust from the default 3 to reflect you';
+  }
 
   function generateReport(){
     // Core 1–6
@@ -216,10 +259,10 @@
       Neuroticism: Math.max(1, Math.min(5, 6 - emoStable)) // invert stability
     };
 
-    // MBTI-ish tilt (simple heuristic)
+    // MBTI-ish tilt (heuristic)
     const EI = (extrav + (6 - deepWork)) / 2; // deepWork high => I; invert to get E signal
     const JP = (systems + riskSpot - adapt + 5) / 3; // more systems/riskSpot => J; more adapt => P
-    const TF = (systems + translate) / 2 - (attune + agree) / 2 + 3; // systems/translate -> T, attune/agree -> F (center at ~3)
+    const TF = (systems + translate) / 2 - (attune + agree) / 2 + 3; // systems/translate -> T, attune/agree -> F
 
     const EI_tag = EI >= 3 ? 'E-leaning' : 'I-leaning';
     const JP_tag = JP >= 3 ? 'J-leaning' : 'P-leaning';
@@ -248,7 +291,7 @@
     const energyPref = deepWork >= 3 ? 'deep solo focus' : 'collaborative energy';
 
     const summary = `You present as a ${leaderTag} with ${EI_tag}/${TF_tag}/${JP_tag} tendencies. `
-      + `Big Five profile shows O:${openness}/5, C:${consc}/5, E:${extrav}/5, A:${agree}/5, N:${bigFive.Neuroticism}/5 `
+      + `Big Five profile O:${openness}/5, C:${consc}/5, E:${extrav}/5, A:${agree}/5, N:${bigFive.Neuroticism}/5 `
       + `and an ${enneagramHint}. You prefer ${energyPref} and value `
       + `${systems>=3?'structure':'flexibility'}. ${attune>=3?'You check emotions directly;':'Add earlier emotional check-ins;'} `
       + `${boundaryTag === 'Watch Boundaries' ? 'tighten edges around time/energy.' : 'maintain clear edges around time/energy.'}`;
@@ -278,11 +321,11 @@
     if (boundary  >= 4) growth.push('Define non-negotiables early; say yes with scope and credit.');
     if (attune    <= 2) growth.push('Schedule brief check-ins; look for tone/behavior changes.');
     if (advocacy  <= 2) growth.push('Share monthly impact notes; ask for attribution explicitly.');
-    if (agree     >= 4 && boundary >= 3) growth.push('Use “warm no”: appreciate, give rationale, propose alternative.');
+    if (agree     >= 4 && boundary >= 3) growth.push('Use a “warm no”: appreciate, give rationale, propose an alternative.');
     if (consc     <= 2) growth.push('Adopt a weekly plan: top 3 outcomes, 2 guardrails, 1 risk review.');
     if (bigFive.Neuroticism >= 4) growth.push('Name the stressor + one next action; practice 2-minute resets.');
 
-    // default fallbacks
+    // defaults
     if (!strengths.length) strengths.push('balanced capability across domains');
     if (!risks.length)     risks.push('no acute risks detected; maintain feedback loops');
     if (!growth.length)    growth.push('Maintain “kindness with edges”: warmth + clear boundaries.');
@@ -301,9 +344,17 @@
 
     const notesBox = document.getElementById('userNotesBox');
     const notesOut = document.getElementById('userNotes');
-    const notesVal = gt('notes');
-    if (notesVal){ notesBox.style.display='block'; notesOut.textContent = notesVal; } else { notesBox.style.display='none'; }
+    if (notes){ notesBox.style.display='block'; notesOut.textContent = notes; } else { notesBox.style.display='none'; }
 
+    // badges
+    const kpiEnergy = document.getElementById('kpiEnergy');
+    const kpiBoundary = document.getElementById('kpiBoundary');
+    kpiEnergy.style.display = 'inline-block';
+    kpiEnergy.textContent = deepWork >= 3 ? 'Energy: Deep Focus' : 'Energy: Collaborative';
+    kpiBoundary.style.display = boundary >= 4 ? 'inline-block' : 'none';
+    kpiBoundary.textContent = 'Boundary Risk';
+
+    // raw dump
     const raw = {
       core:{leadership,systems,attune,boundary,deepWork,advocacy},
       personality:{openness,consc,extrav,agree,emoStable,achieve},
@@ -313,6 +364,28 @@
     document.getElementById('raw').textContent = JSON.stringify(raw, null, 2);
 
     window.scrollTo({top: document.getElementById('report').offsetTop - 12, behavior:'smooth'});
+  }
+
+  async function copySummary(){
+    const report = document.getElementById('summary').textContent.trim();
+    if (!report){ alert('Generate the report first.'); return; }
+    try {
+      await navigator.clipboard.writeText(report);
+      alert('Summary copied to clipboard.');
+    } catch {
+      alert('Copy failed. Select and copy manually.');
+    }
+  }
+
+  function downloadJSON(){
+    const raw = document.getElementById('raw').textContent.trim();
+    if (!raw){ alert('Generate the report first.'); return; }
+    const blob = new Blob([raw], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'core-identity-report.json';
+    document.body.appendChild(a); a.click();
+    URL.revokeObjectURL(url); a.remove();
   }
 </script>
 </body>
