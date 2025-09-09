@@ -49,6 +49,11 @@
     .energy{display:inline-block;font-weight:800;font-size:18px;padding:6px 10px;border-radius:12px;border:1px solid #d1fae5;background:#ecfdf5;color:#065f46}
     .boundary{display:inline-block;font-weight:700;font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid #fde68a;background:#fffbeb;color:#7c2d12}
     .noprint{display:block}
+    .highlight {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+     }
     @media print{
       header,.noprint{display:none}
       body{background:#fff}
@@ -303,11 +308,14 @@
     const boundaryTag = boundary >= 4 ? 'Watch Boundaries' : 'Healthy Boundaries';
     const energyPref = deepWork >= 3 ? 'deep solo focus' : 'collaborative energy';
 
-    const summary = `You present as a ${leaderTag} with ${EI_tag}/${TF_tag}/${JP_tag} tendencies. `
-      + `Big Five profile O:${openness}/5, C:${consc}/5, E:${extrav}/5, A:${agree}/5, N:${bigFive.Neuroticism}/5 `
-      + `and an ${enneagramHint}. You prefer ${energyPref} and value `
-      + `${systems>=3?'structure':'flexibility'}. ${attune>=3?'You check emotions directly;':'Add earlier emotional check-ins;'} `
-      + `${boundaryTag === 'Watch Boundaries' ? 'tighten edges around time/energy.' : 'maintain clear edges around time/energy.'}`;
+  const summary = `You present as a <span class="highlight">${leaderTag}</span> `
+  + `with <span class="highlight">${EI_tag}/${TF_tag}/${JP_tag}</span> tendencies. `
+  + `Big Five profile O:${openness}/5, C:${consc}/5, E:${extrav}/5, A:${agree}/5, N:${bigFive.Neuroticism}/5 `
+  + `and an <span class="highlight">${enneagramHint}</span>. `
+  + `You prefer <span class="highlight">${energyPref}</span> and value `
+  + `${systems>=3?'structure':'flexibility'}. `
+  + `${attune>=3?'You check emotions directly;':'Add earlier emotional check-ins;'} `
+  + `${boundaryTag === 'Watch Boundaries' ? 'tighten edges around time/energy.' : 'maintain clear edges around time/energy.'}`;
 
     // Strengths / Risks / Growth
     const strengths=[], risks=[], growth=[];
@@ -340,7 +348,7 @@
 
     // render
     document.getElementById('report').style.display = 'block';
-    document.getElementById('summary').textContent = summary;
+    document.getElementById('summary').innerHTML = summary;
 
     const tagsBox = document.getElementById('tags');
     tagsBox.innerHTML = '';
