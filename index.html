@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>CORe Identity — Strengths, Risks & Growth</title>
+  <title>CORe Identity — Personality & Career Branding Report</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
       --bg:#f8fafc; --card:#fff; --ink:#0f172a; --muted:#475569; --line:#e2e8f0;
-      --accent:#1e293b;
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
     header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line)}
-    .wrap{max-width:1000px;margin:0 auto;padding:16px 20px}
+    .wrap{max-width:1080px;margin:0 auto;padding:16px 20px}
     h1{margin:0;font-size:22px}
     .grid{display:grid;gap:16px}
-    @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:960px){.grid-2{grid-template-columns:1fr 1fr}}
     .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
     .muted{color:var(--muted)}
     .row{display:flex;gap:12px;align-items:center;justify-content:space-between}
     .label{font-size:14px;font-weight:600}
     input[type=range]{width:100%}
-    textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit}
+    textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit}
     button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}
     button:hover{background:#f1f5f9}
     .tags{display:flex;gap:8px;flex-wrap:wrap}
@@ -31,13 +31,14 @@
     .title{font-size:18px;font-weight:700;margin:0 0 6px}
     .sub{font-size:14px;margin:6px 0}
     details{font-size:12px}
+    .section-title{font-weight:700;margin:6px 0 6px}
     @media print{header,.noprint{display:none} .wrap{padding:0} body{background:#fff}}
   </style>
 </head>
 <body>
 <header>
   <div class="wrap row">
-    <h1>CORe Identity — Strengths, Risks & Growth</h1>
+    <h1>CORe Identity — Personality & Career Branding</h1>
     <div class="noprint">
       <button onclick="window.print()">Print / Save PDF</button>
     </div>
@@ -45,61 +46,94 @@
 </header>
 
 <main class="wrap grid" style="margin-top:16px">
-  <!-- About -->
+  <!-- Intro -->
   <section class="card">
     <div class="title">What this does</div>
     <p class="sub muted">
-      A quick self-assessment (inspired by your example) to map what you feel “unable” or stuck with
-      in <b>life, family, work, and relationships</b> to a practical identity snapshot:
-      <i>strengths → risks → growth actions</i>.
+      Quick self-assessment inspired by your story to translate what you feel “unable/stuck” with in
+      <b>life, family, work, and relationships</b> into a practical identity snapshot:
+      <i>Big Five</i>, <i>MBTI tilt</i>, <i>Enneagram drive hint</i>, and <i>Career Branding tags</i> — plus strengths, risks, and growth actions.
     </p>
   </section>
 
-  <!-- Assessment + Notes -->
+  <!-- Questions + Notes -->
   <section class="grid grid-2">
+    <!-- Core (6) -->
     <div class="card">
-      <div class="title">6 Questions (1–5)</div>
-      <p class="muted" style="margin-top:-4px">1 = strongly disagree, 5 = strongly agree</p>
+      <div class="title">A) Core Life/Work/Relationship (1–5)</div>
+      <p class="muted" style="margin-top:-6px">1 = strongly disagree, 5 = strongly agree</p>
 
-      <div class="item">
-        <div class="label">1) In tough moments, I naturally take charge and set direction. (Work/Life)</div>
-        <div class="row"><input id="q1" type="range" min="1" max="5" value="3" oninput="syncVal(this,'v1')"><span id="v1">3</span></div>
-      </div>
+      <div class="label">1) In tough moments, I naturally take charge and set direction. (Work/Life)</div>
+      <div class="row"><input id="q1" type="range" min="1" max="5" value="3" oninput="sv(this,'v1')"><span id="v1">3</span></div>
 
-      <div class="item">
-        <div class="label">2) I build systems (habits, dashboards) rather than improvise. (Work/Family)</div>
-        <div class="row"><input id="q2" type="range" min="1" max="5" value="3" oninput="syncVal(this,'v2')"><span id="v2">3</span></div>
-      </div>
+      <div class="label">2) I build systems (habits, dashboards) rather than improvise. (Work/Family)</div>
+      <div class="row"><input id="q2" type="range" min="1" max="5" value="3" oninput="sv(this,'v2')"><span id="v2">3</span></div>
 
-      <div class="item">
-        <div class="label">3) I proactively check how people feel instead of assuming. (Relationships)</div>
-        <div class="row"><input id="q3" type="range" min="1" max="5" value="3" oninput="syncVal(this,'v3')"><span id="v3">3</span></div>
-      </div>
+      <div class="label">3) I proactively check how people feel instead of assuming. (Relationships)</div>
+      <div class="row"><input id="q3" type="range" min="1" max="5" value="3" oninput="sv(this,'v3')"><span id="v3">3</span></div>
 
-      <div class="item">
-        <div class="label">4) I over-commit to help others even when it costs me. (Boundaries)</div>
-        <div class="row"><input id="q4" type="range" min="1" max="5" value="3" oninput="syncVal(this,'v4')"><span id="v4">3</span></div>
-      </div>
+      <div class="label">4) I over-commit to help others even when it costs me. (Boundaries)</div>
+      <div class="row"><input id="q4" type="range" min="1" max="5" value="3" oninput="sv(this,'v4')"><span id="v4">3</span></div>
 
-      <div class="item">
-        <div class="label">5) I prefer deep solo work over constant meetings. (Energy style)</div>
-        <div class="row"><input id="q5" type="range" min="1" max="5" value="3" oninput="syncVal(this,'v5')"><span id="v5">3</span></div>
-      </div>
+      <div class="label">5) I prefer deep solo work over constant meetings. (Energy style)</div>
+      <div class="row"><input id="q5" type="range" min="1" max="5" value="3" oninput="sv(this,'v5')"><span id="v5">3</span></div>
 
-      <div class="item">
-        <div class="label">6) I share wins and ask for credit when appropriate. (Self-advocacy)</div>
-        <div class="row"><input id="q6" type="range" min="1" max="5" value="3" oninput="syncVal(this,'v6')"><span id="v6">3</span></div>
-      </div>
+      <div class="label">6) I share wins and ask for credit when appropriate. (Self-advocacy)</div>
+      <div class="row"><input id="q6" type="range" min="1" max="5" value="3" oninput="sv(this,'v6')"><span id="v6">3</span></div>
     </div>
 
+    <!-- Personality (6) + Career Branding (4) -->
     <div class="card">
-      <div class="title">Your Notes</div>
-      <p class="muted" style="margin-top:-4px">Add anything about yourself: role, industry, family, relationship context, recent challenges, goals.</p>
+      <div class="title">B) Personality + Career Branding (1–5)</div>
+      <p class="muted" style="margin-top:-6px">These map to Big Five / Enneagram hints and career identity</p>
+
+      <!-- Personality (6) -->
+      <div class="section-title">Personality</div>
+
+      <div class="label">7) Openness — I seek new ideas/experiences that challenge my comfort zone.</div>
+      <div class="row"><input id="q7" type="range" min="1" max="5" value="3" oninput="sv(this,'v7')"><span id="v7">3</span></div>
+
+      <div class="label">8) Conscientiousness — I set goals and follow through systematically.</div>
+      <div class="row"><input id="q8" type="range" min="1" max="5" value="3" oninput="sv(this,'v8')"><span id="v8">3</span></div>
+
+      <div class="label">9) Extraversion — I gain energy from people/group activities.</div>
+      <div class="row"><input id="q9" type="range" min="1" max="5" value="3" oninput="sv(this,'v9')"><span id="v9">3</span></div>
+
+      <div class="label">10) Agreeableness — I prioritize harmony and others’ needs.</div>
+      <div class="row"><input id="q10" type="range" min="1" max="5" value="3" oninput="sv(this,'v10')"><span id="v10">3</span></div>
+
+      <div class="label">11) Emotional Stability — I stay calm and resilient under pressure.</div>
+      <div class="row"><input id="q11" type="range" min="1" max="5" value="3" oninput="sv(this,'v11')"><span id="v11">3</span></div>
+
+      <div class="label">12) Achievement Drive — Recognition/results motivate me strongly.</div>
+      <div class="row"><input id="q12" type="range" min="1" max="5" value="3" oninput="sv(this,'v12')"><span id="v12">3</span></div>
+
+      <!-- Career Branding (4) -->
+      <div class="section-title">Career Branding</div>
+
+      <div class="label">13) Adaptability — I can pivot without losing focus.</div>
+      <div class="row"><input id="q13" type="range" min="1" max="5" value="3" oninput="sv(this,'v13')"><span id="v13">3</span></div>
+
+      <div class="label">14) Mentoring — I elevate others while advancing goals.</div>
+      <div class="row"><input id="q14" type="range" min="1" max="5" value="3" oninput="sv(this,'v14')"><span id="v14">3</span></div>
+
+      <div class="label">15) Translation — I turn technical detail into leader-ready strategy.</div>
+      <div class="row"><input id="q15" type="range" min="1" max="5" value="3" oninput="sv(this,'v15')"><span id="v15">3</span></div>
+
+      <div class="label">16) Risk Spotting — I detect project risks early.</div>
+      <div class="row"><input id="q16" type="range" min="1" max="5" value="3" oninput="sv(this,'v16')"><span id="v16">3</span></div>
+    </div>
+  </section>
+
+  <!-- Notes + Generate -->
+  <section class="grid grid-2">
+    <div class="card">
+      <div class="title">Your Notes (context)</div>
+      <p class="muted" style="margin-top:-6px">Add anything about yourself: role, industry, family/relationship context, challenges, goals.</p>
       <textarea id="notes" placeholder="Type your context here..."></textarea>
-      <div class="row noprint" style="margin-top:10px">
-        <div></div>
-        <button onclick="generateReport()">Generate CORe Identity Report</button>
-      </div>
+    </div>
+    <div class="card noprint" style="display:flex;align-items:end;justify-content:flex-end">
+      <button onclick="generateReport()">Generate CORe Identity Report</button>
     </div>
   </section>
 
@@ -107,6 +141,7 @@
   <section class="card" id="report" style="display:none">
     <div class="title">Your CORe Identity Report</div>
     <p id="summary" class="sub"></p>
+
     <div class="tags" id="tags"></div>
 
     <div class="grid grid-2" style="margin-top:12px">
@@ -131,85 +166,153 @@
     </div>
 
     <details style="margin-top:10px">
-      <summary>Raw Scores</summary>
+      <summary>Raw & Derived Scores</summary>
       <pre id="raw" class="muted"></pre>
     </details>
   </section>
 </main>
 
 <script>
-  function syncVal(input, id){ document.getElementById(id).textContent = input.value; }
+  // helpers
+  const gv = id => Number(document.getElementById(id).value);
+  const gt = id => document.getElementById(id).value.trim();
+  const tag = t => { const s=document.createElement('span'); s.className='tag'; s.textContent=t; return s; };
+  const li  = t => { const l=document.createElement('li');  l.textContent=t;   return l; };
 
-  function val(id){ return Number(document.getElementById(id).value); }
-  function text(id){ return document.getElementById(id).value.trim(); }
-
-  function tag(text){ const s=document.createElement('span'); s.className='tag'; s.textContent=text; return s; }
-  function li(text){ const l=document.createElement('li'); l.textContent=text; return l; }
+  function sv(input, id){ document.getElementById(id).textContent = input.value; }
 
   function generateReport(){
-    const leadership = val('q1');
-    const systems    = val('q2');
-    const attune     = val('q3');
-    const boundary   = val('q4'); // higher = more likely to overcommit
-    const deepWork   = val('q5');
-    const advocacy   = val('q6');
-    const notes      = text('notes');
+    // Core 1–6
+    const leadership = gv('q1');
+    const systems    = gv('q2');
+    const attune     = gv('q3');
+    const boundary   = gv('q4');   // higher = more likely to overcommit
+    const deepWork   = gv('q5');   // higher = introvert-leaning
+    const advocacy   = gv('q6');
 
-    const IorE = (deepWork >= 3) ? 'Introvert-leaning' : 'Extravert-leaning';
-    const JorP = (systems  >= 3) ? 'Structured (J)'    : 'Flexible (P)';
-    const LeaderTag = (leadership >= 4) ? 'Natural Driver' : (leadership <= 2 ? 'Selective Leader' : 'Situational Leader');
-    const BoundaryTag = (boundary >= 4) ? 'Watch Boundaries' : 'Healthy Boundaries';
+    // Personality 7–12
+    const openness   = gv('q7');
+    const consc      = gv('q8');
+    const extrav     = gv('q9');
+    const agree      = gv('q10');
+    const emoStable  = gv('q11');  // higher = more stable (lower neuroticism)
+    const achieve    = gv('q12');  // Enneagram 3-ish drive
 
-    const summary = `You come across as a ${LeaderTag} with ${JorP} habits and ${IorE} focus. ` +
-                    `You value ${systems>=3?'systems and planning':'improvisation and flexibility'} and draw energy from ` +
-                    `${deepWork>=3?'deep solo work':'collaboration and discussion'}. ` +
-                    `${attune>=3?'You track emotions directly.':'Add earlier emotional check-ins to reduce blind spots.'}`;
+    // Career Branding 13–16
+    const adapt      = gv('q13');
+    const mentor     = gv('q14');
+    const translate  = gv('q15');
+    const riskSpot   = gv('q16');
 
+    const notes      = gt('notes');
+
+    // --- Derived traits ---
+    // Big Five
+    const bigFive = {
+      Openness: openness,
+      Conscientiousness: consc,
+      Extraversion: extrav,
+      Agreeableness: agree,
+      Neuroticism: Math.max(1, Math.min(5, 6 - emoStable)) // invert stability
+    };
+
+    // MBTI-ish tilt (simple heuristic)
+    const EI = (extrav + (6 - deepWork)) / 2; // deepWork high => I; invert to get E signal
+    const JP = (systems + riskSpot - adapt + 5) / 3; // more systems/riskSpot => J; more adapt => P
+    const TF = (systems + translate) / 2 - (attune + agree) / 2 + 3; // systems/translate -> T, attune/agree -> F (center at ~3)
+
+    const EI_tag = EI >= 3 ? 'E-leaning' : 'I-leaning';
+    const JP_tag = JP >= 3 ? 'J-leaning' : 'P-leaning';
+    const TF_tag = TF >= 3 ? 'T-leaning' : 'F-leaning';
+
+    // Enneagram hint (very light)
+    const drive3 = achieve;                  // visibility/results drive
+    const drive9 = agree;                    // harmony drive
+    const drive5 = (deepWork + openness)/2;  // analysis/knowledge drive
+    const enneagramHint = (() => {
+      const map = [{k:'Achiever (3)',v:drive3},{k:'Peacemaker (9)',v:drive9},{k:'Investigator (5)',v:drive5}];
+      map.sort((a,b)=>b.v-a.v);
+      return map[0].k + '-tilt';
+    })();
+
+    // Career Branding tags
+    const tagsCareer = [];
+    if (translate >= 4) tagsCareer.push('Strategy Translator');
+    if (riskSpot  >= 4) tagsCareer.push('Risk Spotter');
+    if (mentor    >= 4) tagsCareer.push('Strategic Mentor');
+    if (adapt     >= 4) tagsCareer.push('Adaptive Operator');
+
+    // Summary sentence
+    const leaderTag = leadership >= 4 ? 'Natural Driver' : (leadership <= 2 ? 'Selective Leader' : 'Situational Leader');
+    const boundaryTag = boundary >= 4 ? 'Watch Boundaries' : 'Healthy Boundaries';
+    const energyPref = deepWork >= 3 ? 'deep solo focus' : 'collaborative energy';
+
+    const summary = `You present as a ${leaderTag} with ${EI_tag}/${TF_tag}/${JP_tag} tendencies. `
+      + `Big Five profile shows O:${openness}/5, C:${consc}/5, E:${extrav}/5, A:${agree}/5, N:${bigFive.Neuroticism}/5 `
+      + `and an ${enneagramHint}. You prefer ${energyPref} and value `
+      + `${systems>=3?'structure':'flexibility'}. ${attune>=3?'You check emotions directly;':'Add earlier emotional check-ins;'} `
+      + `${boundaryTag === 'Watch Boundaries' ? 'tighten edges around time/energy.' : 'maintain clear edges around time/energy.'}`;
+
+    // Strengths / Risks / Growth
     const strengths=[], risks=[], growth=[];
+
+    // strengths
     if (leadership >= 4) strengths.push('direction-setting under ambiguity');
-    if (systems   >= 4) strengths.push('systems thinking & habit design');
-    if (advocacy  >= 4) strengths.push('visible self-advocacy');
-    if (attune    >= 4) strengths.push('emotional attunement & proactive check-ins');
-    if (deepWork  >= 4) strengths.push('focus and analytical depth');
+    if (systems   >= 4) strengths.push('systems thinking & planning');
+    if (translate >= 4) strengths.push('translating technical detail into strategy');
+    if (riskSpot  >= 4) strengths.push('early risk detection and mitigation');
+    if (mentor    >= 4) strengths.push('mentoring and uplifting others');
+    if (openness  >= 4) strengths.push('curiosity and idea-generation');
+    if (consc     >= 4) strengths.push('disciplined execution and follow-through');
+    if (emoStable >= 4) strengths.push('calm under pressure');
 
-    if (boundary  >= 4) { risks.push('over-committing at the expense of self'); growth.push('Define non-negotiables early; say yes with scope and credit.'); }
-    if (attune    <= 2) { risks.push('missing subtle emotional signals'); growth.push('Schedule brief check-ins; look for tone/behavior changes.'); }
-    if (advocacy  <= 2) { risks.push('under-crediting your contributions'); growth.push('Share wins monthly with stakeholders; ask for attribution.'); }
+    // risks
+    if (boundary  >= 4) risks.push('over-committing; kindness read as unlimited availability');
+    if (attune    <= 2) risks.push('missing subtle emotional signals in close relationships');
+    if (advocacy  <= 2) risks.push('under-crediting your contributions and wins');
+    if (agree     >= 4 && boundary >= 3) risks.push('people-pleasing; difficulty saying no');
+    if (consc     <= 2 && adapt >= 4) risks.push('shifting priorities without enough structure');
+    if (bigFive.Neuroticism >= 4) risks.push('stress reactivity; energy drain in conflicts');
 
-    if (strengths.length===0) strengths.push('balanced capability across domains');
-    if (risks.length===0)     risks.push('no acute risks detected; maintain feedback loops');
-    if (growth.length===0)    growth.push('Maintain “kindness with edges”: warmth + clear boundaries.');
+    // growth
+    if (boundary  >= 4) growth.push('Define non-negotiables early; say yes with scope and credit.');
+    if (attune    <= 2) growth.push('Schedule brief check-ins; look for tone/behavior changes.');
+    if (advocacy  <= 2) growth.push('Share monthly impact notes; ask for attribution explicitly.');
+    if (agree     >= 4 && boundary >= 3) growth.push('Use “warm no”: appreciate, give rationale, propose alternative.');
+    if (consc     <= 2) growth.push('Adopt a weekly plan: top 3 outcomes, 2 guardrails, 1 risk review.');
+    if (bigFive.Neuroticism >= 4) growth.push('Name the stressor + one next action; practice 2-minute resets.');
+
+    // default fallbacks
+    if (!strengths.length) strengths.push('balanced capability across domains');
+    if (!risks.length)     risks.push('no acute risks detected; maintain feedback loops');
+    if (!growth.length)    growth.push('Maintain “kindness with edges”: warmth + clear boundaries.');
 
     // render
-    const report   = document.getElementById('report');
-    const tagsBox  = document.getElementById('tags');
-    const sBox     = document.getElementById('strengths');
-    const rBox     = document.getElementById('risks');
-    const gBox     = document.getElementById('growth');
-    const sum      = document.getElementById('summary');
-    const raw      = document.getElementById('raw');
+    document.getElementById('report').style.display = 'block';
+    document.getElementById('summary').textContent = summary;
 
-    report.style.display = 'block';
-    sum.textContent = summary;
-
+    const tagsBox = document.getElementById('tags');
     tagsBox.innerHTML = '';
-    [LeaderTag, JorP, IorE, BoundaryTag].forEach(t => tagsBox.appendChild(tag(t)));
+    [leaderTag, boundaryTag, EI_tag, TF_tag, JP_tag, enneagramHint, ...tagsCareer].forEach(t => tagsBox.appendChild(tag(t)));
 
-    sBox.innerHTML=''; strengths.forEach(t => sBox.appendChild(li(t)));
-    rBox.innerHTML=''; risks.forEach(t => rBox.appendChild(li(t)));
-    gBox.innerHTML=''; growth.forEach(t => gBox.appendChild(li(t)));
+    const sBox = document.getElementById('strengths'); sBox.innerHTML=''; strengths.forEach(t=>sBox.appendChild(li(t)));
+    const rBox = document.getElementById('risks');     rBox.innerHTML=''; risks.forEach(t=>rBox.appendChild(li(t)));
+    const gBox = document.getElementById('growth');    gBox.innerHTML=''; growth.forEach(t=>gBox.appendChild(li(t)));
 
     const notesBox = document.getElementById('userNotesBox');
     const notesOut = document.getElementById('userNotes');
-    if (notes){
-      notesBox.style.display='block';
-      notesOut.textContent = notes;
-    } else {
-      notesBox.style.display='none';
-    }
+    const notesVal = gt('notes');
+    if (notesVal){ notesBox.style.display='block'; notesOut.textContent = notesVal; } else { notesBox.style.display='none'; }
 
-    raw.textContent = JSON.stringify({leadership,systems,attune,boundary,deepWork,advocacy}, null, 2);
-    window.scrollTo({top: report.offsetTop - 12, behavior: 'smooth'});
+    const raw = {
+      core:{leadership,systems,attune,boundary,deepWork,advocacy},
+      personality:{openness,consc,extrav,agree,emoStable,achieve},
+      career:{adapt,mentor,translate,riskSpot},
+      bigFive, MBTI:{EI:EI_tag, TF:TF_tag, JP:JP_tag}, enneagramHint
+    };
+    document.getElementById('raw').textContent = JSON.stringify(raw, null, 2);
+
+    window.scrollTo({top: document.getElementById('report').offsetTop - 12, behavior:'smooth'});
   }
 </script>
 </body>
