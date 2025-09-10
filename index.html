@@ -185,7 +185,7 @@
         <button id="btnCopy" class="btn" onclick="copySummary()" disabled>Copy Summary</button>
         <button id="btnJson" class="btn" onclick="downloadJSON()" disabled>Download JSON</button>
         <button id="btnShare" class="btn" onclick="shareReport()" disabled>Share Report</button>
-        <button class="btn ghost" onclick="location.reload()">Reset</button>
+        <button class="btn ghost" onclick="resetAll()">Reset</button>
       </div>
     </div>
   </section>
@@ -267,6 +267,52 @@
            openness,consc,extrav,agree,emoStable,achieve,
            adapt,mentor,translate,riskSpot] = collectAll();
     const notes = gt('notes');
+<script>
+function resetAll(){
+  // 1) Clear URL params so hydration won’t reapply old answers
+  history.replaceState(null, '', location.pathname);
+
+  // 2) Reset all sliders back to 3 and labels
+  for (let i = 1; i <= 16; i++) {
+    const el = document.getElementById('q' + i);
+    const v  = document.getElementById('v' + i);
+    if (el) el.value = 3;
+    if (v)  v.textContent = '3';
+  }
+
+  // 3) Clear notes
+  const notesEl = document.getElementById('notes');
+  if (notesEl) notesEl.value = '';
+
+  // 4) Hide report & clear its contents
+  const report = document.getElementById('report');
+  if (report) report.style.display = 'none';
+
+  const idsToClearHTML = ['summary','mbtiExplain'];
+  const idsToClearText = ['raw'];
+  const idsToClearLists = ['tags','strengths','risks','growth'];
+
+  idsToClearHTML.forEach(id => { const n = document.getElementById(id); if (n) n.innerHTML = ''; });
+  idsToClearText.forEach(id => { const n = document.getElementById(id); if (n) n.textContent = ''; });
+  idsToClearLists.forEach(id => { const n = document.getElementById(id); if (n) n.innerHTML = ''; });
+
+  const notesBox = document.getElementById('userNotesBox');
+  if (notesBox) notesBox.style.display = 'none';
+
+  // 5) Hide badges
+  const kpiEnergy   = document.getElementById('kpiEnergy');
+  const kpiBoundary = document.getElementById('kpiBoundary');
+  if (kpiEnergy)   kpiEnergy.style.display = 'none';
+  if (kpiBoundary) kpiBoundary.style.display = 'none';
+
+  // 6) Disable post-actions
+  if (typeof enableResultButtons === 'function') enableResultButtons(false);
+
+  // 7) Update progress and scroll to top
+  if (typeof updateProgress === 'function') updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 
     // Big Five
     const bigFive = {
